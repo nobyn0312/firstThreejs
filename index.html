@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@v0.151.3/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@v0.151.3/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <script type="module">
+        // 1. Three.jsライブラリの読み込み
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+        import { DRACOLoader } from 'three/addons/loaders/DRACOLoader.js';
+
+        // 2. シーンを作成する
+        const scene = new THREE.Scene();
+
+        // 3. カメラを作成する
+        const camera = new THREE.PerspectiveCamera(
+            75, // 視野角
+            window.innerWidth / window.innerHeight, // アスペクト比
+            0.1, // ニアクリップ面
+            1000 // ファークリップ面
+        );
+        camera.position.z = 5; // カメラの位置を設定する
+
+        // 4. レンダラーを作成する
+        const renderer = new THREE.WebGLRenderer();
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.body.appendChild(renderer.domElement);
+
+        const controls = new OrbitControls(camera, renderer.domElement);
+        controls.zoomSpeed = 0.5;
+        controls.update(); // 初期化時に一度だけ呼び出す
+
+        // AmbientLightを追加する
+// 環境光（全体をほんのり明るくする）
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.6);
+scene.add(ambientLight);
+
+// 平行光源（太陽のようなライト）
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1);
+directionalLight.position.set(5, 10, 5); // 位置を設定
+directionalLight.castShadow = true; // 影を落とす場合
+scene.add(directionalLight);
+
+// 補助的に半球光も追加（空と地面の光の差を再現）
+const hemiLight = new THREE.HemisphereLight(0xffffff, 0x444444, 0.5);
+hemiLight.position.set(0, 20, 0);
+scene.add(hemiLight);
+
+        // 5. GLTFLoaderを作成する
+        const loader = new GLTFLoader();
+
+        const dracoLoader = new DRACOLoader(); // DRACOLoaderのインスタンスを作成
+        dracoLoader.setDecoderPath('https://www.gstatic.com/draco/versioned/decoders/1.4.1/');
+        loader.setDRACOLoader(dracoLoader); // GLTFLoaderにDRACOLoaderのインスタンスを提供
+
+        // 6. 3Dモデルのロード＆描画
+        loader.load(
+            "/rooms.glb",
+            function (gltf) {
+                scene.add(gltf.scene);
+            },
+            undefined,
+            function (error) {
+                console.error(error);
+            }
+        );
+
+        function animate() {
+            requestAnimationFrame(animate);
+            renderer.render(scene, camera);
+        }
+        animate();
+    </script>
+  </body>
+</html>
