@@ -126,3 +126,7 @@ window.addEventListener('resize', () => {
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
 });
+
+const container = document.getElementById('three-container');
+container.appendChild(renderer.domElement);
+renderer.setSize(container.clientWidth, container.clientHeight);
