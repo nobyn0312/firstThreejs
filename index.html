@@ -1,59 +1,71 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8" />
-    <title>Three.js + Blender Model</title>
-    <script type="importmap">
-      {
-        "imports": {
-          "three": "https://unpkg.com/three@0.151.3/build/three.module.js",
-          "three/addons/": "https://unpkg.com/three@0.151.3/examples/jsm/"
-        }
-      }
-    </script>
-    <style>
-      body {
-        margin: 0;
-        font-family: sans-serif;
-      }
-      section {
-        height: 100vh;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-      }
-      #three-container {
-        width: 100%;
-        height: 100%;
-        background-color: #d6d1c1; /* きなり色の背景 */
-      }
-    </style>
-  </head>
-  <body>
+	<head>
+		<meta charset="utf-8" />
+		<title>Three.js + Blender Model</title>
+		<script type="importmap">
+			{
+				"imports": {
+					"three": "https://unpkg.com/three@0.151.3/build/three.module.js",
+					"three/addons/": "https://unpkg.com/three@0.151.3/examples/jsm/"
+				}
+			}
+		</script>
+		<style>
+			body {
+				margin: 0;
+				font-family: sans-serif;
+			}
+			section {
+				display: flex;
+				align-items: center;
+				justify-content: center;
+        margin: 50px 0;
+			}
+			#three-container {
+				width: 100%;
+				height: 100%;
+				background-color: #d6d1c1; /* きなり色の背景 */
+			}
+		</style>
+	</head>
+	<body>
+		<main>
+			<!-- 1枚目の画像セクション -->
+			<section class="image-section" style="background-color: #ffffff">
+				<img
+					src="/img/MYROOM.png"
+					alt=""
+					style="max-width: 100%; height: auto"
+				/>
+			</section>
 
-    <!-- 1枚目の画像セクション -->
-    <section style="background-color: #ffffff;">
-      <img src="/img/MYROOM.png" alt="" style="max-width:100%; height:auto;">
-    </section>
+			<!-- Three.js の描画セクション -->
+			<section style="background-color: #ffffff; padding: 0 50px">
+				<div id="three-container"></div>
+			</section>
 
-    <!-- Three.js の描画セクション -->
-    <section style="background-color: #ffffff; padding: 0 50px;">
-      <div id="three-container"></div>
-    </section>
+			<!-- 動画セクション -->
+			<section
+				style="
+					background-color: #ffffff;
+					display: flex;
+					align-items: center;
+					justify-content: center;
+				"
+			>
+				<video
+					src="./img/firstmodeling.mp4"
+					width="800"
+					controls
+					autoplay
+					loop
+					muted
+					style="max-width: 100%; height: auto; border-radius: 10px"
+				></video>
+			</section>
+		</main>
 
-    <!-- 動画セクション -->
-    <section style="background-color: #ffffff; display:flex; align-items:center; justify-content:center;">
-      <video
-        src="./img/firstmodeling.mp4"
-        width="800"
-        controls
-        autoplay
-        loop
-        muted
-        style="max-width:100%; height:auto; border-radius:10px;">
-      </video>
-    </section>
-
-    <script type="module" src="main.js"></script>
-  </body>
+		<script type="module" src="main.js"></script>
+	</body>
 </html>
